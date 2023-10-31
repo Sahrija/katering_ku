@@ -1,5 +1,10 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:flutter_splash_screen/flutter_splash_screen.dart';
+
+import 'pages/homescreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,11 +15,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: "KateringKu",
-      theme: ThemeData(fontFamily: 'Sofia Pro'),
+      theme: ThemeData(
+        fontFamily: 'Sofia Pro',
+        primaryColor: Color(0xffFE724C),
+      ),
       debugShowCheckedModeBanner: false,
-      home: const Splash1(),
+      home: Splash1(),
     );
   }
 }
@@ -25,34 +33,17 @@ class Splash1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffFE724C),
+      backgroundColor: Theme.of(context).primaryColor,
       body: GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: () {
-          Navigator.of(context).push(
-            PageRouteBuilder(
-              pageBuilder: (context, animation, secondaryAnimation) {
-                return const Splash2();
-              },
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                const begin = Offset(1.0, 0.0);
-                const end = Offset.zero;
-                const curve = Curves.ease;
-                var tween = Tween(begin: begin, end: end)
-                    .chain(CurveTween(curve: curve));
-                var offsetAnimation = animation.drive(tween);
-                return SlideTransition(
-                  position: offsetAnimation,
-                  textDirection: TextDirection.ltr,
-                  child: child,
-                );
-              },
-              transitionDuration: const Duration(milliseconds: 500),
-            ),
+          Get.offAll(
+            () => const Splash2(),
+            transition: Transition.rightToLeft,
+            duration: const Duration(milliseconds: 500),
           );
         },
-        child: Container(
+        child: SizedBox(
           height: double.maxFinite,
           child: Center(
             child: Column(
@@ -61,7 +52,7 @@ class Splash1 extends StatelessWidget {
                 SvgPicture.asset(
                   "images/icons/KateringKu.svg",
                 ),
-                Text(
+                const Text(
                   "KateringKu",
                   style: TextStyle(
                     fontSize: 45,
@@ -69,7 +60,7 @@ class Splash1 extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                Text(
+                const Text(
                   "Hidangan istimewa untuk Momen Istimewa Ku",
                   style: TextStyle(
                     fontSize: 14,
@@ -91,14 +82,136 @@ class Splash2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Scaffold(
+      body: Stack(
+        children: [
+          Image.asset(
+            "images/splash_screen/background.png",
+            fit: BoxFit.fitWidth,
+            width: double.maxFinite,
+          ),
+          Container(
+            padding: const EdgeInsets.all(40.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                hero(),
+                loginAction(),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Column hero() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Image.asset(
-          "images/splash_screen/background.png",
-          fit: BoxFit.fitWidth,
-          width: double.maxFinite,
+        SvgPicture.asset(
+          "images/icons/KateringKuAccent.svg",
+        ),
+        const Text(
+          "KateringKu",
+          style: TextStyle(
+            fontSize: 45,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+          ),
+        ),
+        const Text(
+          "Hidangan istimewa untuk Momen Istimewa Ku",
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.normal,
+            color: Colors.white,
+          ),
         ),
       ],
+    );
+  }
+
+  Column loginAction() {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            verticalLine(),
+            const Text(
+              "Mulai dengan",
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+            verticalLine(),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Image.network(
+              "https://lh3.googleusercontent.com/u/0/drive-viewer/AK7aPaDwmaXTiMkcqfoNW0ifo_XM31nlMPD9JRQc9I3lIcTsLnUwecS91m44RzHd_pXeEkOyuuOwhwhk1acrEHEh_GAFqoINCA=w1920-h902",
+              width: 130,
+            ),
+            Image.network(
+              "https://lh3.googleusercontent.com/u/0/drive-viewer/AK7aPaA4t3lABhmQlrelOAa5E1Xgc9huCCzGwPqyM6iusPRj2XcM7WM04ZGd8fpMjuJgyykYkTSM-Fku4e3ARCor6oWn3QV2zQ=w1920-h902",
+              width: 130,
+            ),
+          ],
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Get.offAll(
+              () => HomeScreen(),
+              transition: Transition.native,
+              duration: Duration(
+                milliseconds: 500,
+              ),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+            maximumSize: Size.fromWidth(600),
+            backgroundColor: Colors.white24,
+            foregroundColor: Colors.white,
+            padding: const EdgeInsets.all(25),
+            fixedSize: const Size.fromWidth(double.maxFinite),
+            side: const BorderSide(color: Colors.white, width: 2),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(100),
+              ),
+            ),
+          ),
+          child: const Text("Mulai dengan email/no. telepon"),
+        ),
+        RichText(
+          text: TextSpan(
+            style:
+                const TextStyle(color: Colors.white, fontFamily: "Sofia Pro"),
+            children: [
+              const TextSpan(
+                text: "Belum punya akun?",
+              ),
+              TextSpan(
+                text: "Daftar",
+                style: const TextStyle(decoration: TextDecoration.underline),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    // function after Daftar is pressed
+                  },
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Container verticalLine() {
+    return Container(
+      color: Colors.white54,
+      height: 2,
+      width: 80,
     );
   }
 }
