@@ -1,10 +1,10 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:flutter_splash_screen/flutter_splash_screen.dart';
+// import 'package:flutter_splash_screen/flutter_splash_screen.dart';
 
-import 'pages/homescreen.dart';
+import 'pages/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,10 +19,23 @@ class MyApp extends StatelessWidget {
       title: "KateringKu",
       theme: ThemeData(
         fontFamily: 'Sofia Pro',
-        primaryColor: Color(0xffFE724C),
+        primaryColor: const Color(0xffFE724C),
+        // colorScheme: const ColorScheme(
+        //   background: Color(0xFFF7F7F7),
+        //   primary: Colors.orange,
+        //   brightness: Brightness.light,
+        //   onPrimary: Colors.white,
+        //   secondary: Colors.red,
+        //   onSecondary: Colors.red,
+        //   error: Colors.red,
+        //   onError: Colors.red,
+        //   onBackground: Colors.red,
+        //   surface: Colors.red,
+        //   onSurface: Colors.red,
+        // ),
       ),
       debugShowCheckedModeBanner: false,
-      home: Splash1(),
+      home: HomeScreen(),
     );
   }
 }
@@ -164,13 +177,13 @@ class Splash2 extends StatelessWidget {
             Get.offAll(
               () => HomeScreen(),
               transition: Transition.native,
-              duration: Duration(
+              duration: const Duration(
                 milliseconds: 500,
               ),
             );
           },
           style: ElevatedButton.styleFrom(
-            maximumSize: Size.fromWidth(600),
+            maximumSize: const Size.fromWidth(600),
             backgroundColor: Colors.white24,
             foregroundColor: Colors.white,
             padding: const EdgeInsets.all(25),

@@ -38,7 +38,8 @@ dependencies:
   flutter_svg: ^2.0.8
   get: ^4.6.6
   collection: ^1.17.2
-  flutter_splash_screen: ^2.0.1+1
+  sticky_headers: ^0.3.0+2
+  font_awesome_flutter: ^10.6.0
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +68,10 @@ flutter:
     - images/
     - images/splash_screen/
     - images/icons/
+    - images/kuliner/
+    - images/momen/
+    - images/rekomendasi/
+    - images/terdekat/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
